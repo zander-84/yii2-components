@@ -19,7 +19,7 @@
     },
     "autoload": {
         "psr-4":{
-            "zander84\\modernadmin\\": "src/"
+            "zander84\\helpers\\": "src/"
         }
     }
 }
