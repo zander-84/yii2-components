@@ -35,11 +35,7 @@ class BaseForm extends Model
             }
 
             //____ 执行sql
-            try {
-                $boolean = $callback();
-            }catch (\Throwable $e) {
-                $boolean = false;
-            }
+            $boolean = $callback();
 
             //____ 提交事务
             if ($boolean) {
