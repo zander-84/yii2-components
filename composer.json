@@ -14,8 +14,13 @@
         "email":"676993761@qq.com"
     }],
     "require": {
-        "php": ">=5.4.0",
-        "yiisoft/yii2": "*"
+        "php": ">=7.0.0",
+        "yiisoft/yii2": "*",
+        "ethercreative/yii2-ip-ratelimiter": "1.*",
+        "yiisoft/yii2-redis": "~2.0.0",
+        "yiisoft/yii2-faker": "^2.0",
+        "aliyuncs/oss-sdk-php": "~2.0",
+        "alibabacloud/client": "^1.5"
     },
     "autoload": {
         "psr-4":{
