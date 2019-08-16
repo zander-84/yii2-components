@@ -18,6 +18,7 @@ class Response extends \yii\web\Response
     public $codeTokenError = 3;
     public $codeInlegalQeq = 4;
     public $codeMaintaining = 5;
+    public $codeSystemBusy = 6;
 
 
     public $logCategory = false;
@@ -53,6 +54,7 @@ class Response extends \yii\web\Response
                 $this->codeTokenError => '请登入',
                 $this->codeInlegalQeq => '无效请求', //加密
                 $this->codeMaintaining => '系统升级中',
+                $this->codeSystemBusy => '系统繁忙',
             ];
         }
 
@@ -66,17 +68,20 @@ class Response extends \yii\web\Response
         $response = $event->sender;
         $debug_msg = $response->data ? $response->data : '';
         $data = '';
-
-
+        
         if ($response->getIsSuccessful()) {
             $code = $response->code;
             $data = $debug_msg;
             $debug_msg = '';
+
         } elseif ($response->getIsClientError() && $response->statusCode == 401) {
             $code = $this->codeTokenError;
 
         } elseif ($response->getIsClientError() && $response->statusCode == 400) {
             $code = $response->code != 0 ? $response->code : $this->codeuserSpaceError;
+
+        } elseif ($response->getIsClientError() && $response->statusCode == 429) {
+            $code = $this->codeSystemBusy;
 
         } elseif ($response->getIsClientError()) {
             $code = $response->code != 0 ? $response->code : $this->codeuserSpaceError;
@@ -106,6 +111,7 @@ class Response extends \yii\web\Response
                 'debug_data' => $response->debugData,           // 用户打印调试输出
                 'debug_msg' => $debug_msg,                      // 系统日志
             ];
+
         } else {
             $msg = $code == $this->codeSystemSpaceError ? '' : $msg;
             $response->data = [
@@ -113,6 +119,7 @@ class Response extends \yii\web\Response
                 'msg' => $msg,
                 'data' => $data
             ];
+
         }
 
 
