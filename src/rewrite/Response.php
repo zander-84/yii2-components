@@ -107,7 +107,7 @@ class Response extends \yii\web\Response
                 'debug_msg' => $debug_msg,                      // 系统日志
             ];
         } else {
-            $msg = $code == self::SYSTEM_ERROR ? '' : $msg;
+            $msg = $code == $this->codeSystemSpaceError ? '' : $msg;
             $response->data = [
                 'code' => $code,
                 'msg' => $msg,

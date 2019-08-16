@@ -50,7 +50,7 @@ class BaseActiveController extends ActiveController
 
     public function behaviors ()
     {
-
+        return [];
         $behaviors = parent::behaviors();
 
         $behaviors['maintain'] = [
