@@ -110,6 +110,29 @@ class BaseActiveController extends ActiveController
     }
 
 
+    public function success($msg='')
+    {
+        Yii::$app->response->code = Yii::$app->response->codeSucess;
+        Yii::$app->response->msg = $msg;
+        return true;
+    }
+
+    public function userError($errors)
+    {
+        Yii::$app->response->code = Yii::$app->response->codeUserSpaceError;
+        Yii::$app->response->msg = $errors;
+        return true;
+    }
+
+
+
+    public function systemError($errors)
+    {
+        Yii::$app->response->code = Yii::$app->response->codeSystemSpaceError;
+        Yii::$app->response->msg = $errors;
+        return true;
+    }
+
 
 
 

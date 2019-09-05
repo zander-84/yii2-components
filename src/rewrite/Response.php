@@ -13,7 +13,7 @@ class Response extends \yii\web\Response
 {
     //____ 固定 code标志
     public $codeSucess = 0;
-    public $codeuserSpaceError = 1;
+    public $codeUserSpaceError = 1;
     public $codeSystemSpaceError = 2;
     public $codeTokenError = 3;
     public $codeInlegalQeq = 4;
@@ -49,7 +49,7 @@ class Response extends \yii\web\Response
         if (!$this->msgs) {
             $this->msgs = [
                 $this->codeSucess => 'Success',
-                $this->codeuserSpaceError => '用户空间错误',
+                $this->codeUserSpaceError => '用户空间错误',
                 $this->codeSystemSpaceError => '系统空间错误',
                 $this->codeTokenError => '请登入',
                 $this->codeInlegalQeq => '无效请求', //加密
@@ -68,7 +68,7 @@ class Response extends \yii\web\Response
         $response = $event->sender;
         $debug_msg = $response->data ? $response->data : '';
         $data = '';
-        
+
         if ($response->getIsSuccessful()) {
             $code = $response->code;
             $data = $debug_msg;
@@ -78,13 +78,13 @@ class Response extends \yii\web\Response
             $code = $this->codeTokenError;
 
         } elseif ($response->getIsClientError() && $response->statusCode == 400) {
-            $code = $response->code != 0 ? $response->code : $this->codeuserSpaceError;
+            $code = $response->code != 0 ? $response->code : $this->codeUserSpaceError;
 
         } elseif ($response->getIsClientError() && $response->statusCode == 429) {
             $code = $this->codeSystemBusy;
 
         } elseif ($response->getIsClientError()) {
-            $code = $response->code != 0 ? $response->code : $this->codeuserSpaceError;
+            $code = $response->code != 0 ? $response->code : $this->codeUserSpaceError;
             $response->msg = $response->msg ? $response->msg : (isset($debug_msg['message']) ? $debug_msg['message'] : '');
 
         } elseif ($response->getIsServerError()) {
