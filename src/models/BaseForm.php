@@ -35,18 +35,32 @@ class BaseForm extends Model
             }
 
             //____ 执行sql
-            $boolean = $callback();
+            try {
+                $boolean = $callback();
+            } catch (\Throwable $e) {
+                try {
+                    $transaction->rollBack();
+                } catch (\Throwable $e) {
+                    Yii::$app->db->close();
+                }
+                Yii::$app->db->close();
+                if ($currentAttempt >= $attempts) {
+                    Yii::error('mysql 失败: '.$e->getMessage());
+                    return false;
+                } else {
+                    continue;
+                }
+            }
 
             //____ 提交事务
             if ($boolean) {
-
                 try {
                     $transaction->commit();
                     return true;
                 } catch (\Throwable $e) {
                     Yii::$app->db->close();
                     if ($currentAttempt >= $attempts) {
-                        Yii::error('commit 失败');
+                        Yii::error('commit 失败: '.$e->getMessage());
                         return false;
                     } else {
                         continue;
@@ -58,7 +72,7 @@ class BaseForm extends Model
                     $transaction->rollBack();
                 } catch (\Throwable $e) {
                     Yii::$app->db->close();
-                    Yii::error('rollBack 失败');
+                    Yii::error('rollBack 失败: '.$e->getMessage());
                 }
 
                 return false;
