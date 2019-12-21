@@ -42,7 +42,6 @@ class BaseActiveController extends ActiveController
     protected $signKey = 'sign';
 
 
-
     public function actions ()
     {
         return [];
@@ -55,6 +54,7 @@ class BaseActiveController extends ActiveController
         $behaviors['maintain'] = [
             'class' => Maintain::class,
         ];
+        
         $behaviors['rateLimiter'] = [
             'class' => RateLimiter::class,
             'rateLimit' => $this->rateLimit,
@@ -110,14 +110,14 @@ class BaseActiveController extends ActiveController
     }
 
 
-    public function success($msg='')
+    public function success ($msg = '')
     {
         Yii::$app->response->code = Yii::$app->response->codeSucess;
         Yii::$app->response->msg = $msg;
         return true;
     }
 
-    public function userError($errors)
+    public function userError ($errors)
     {
         Yii::$app->response->code = Yii::$app->response->codeUserSpaceError;
         Yii::$app->response->msg = $errors;
@@ -125,28 +125,12 @@ class BaseActiveController extends ActiveController
     }
 
 
-
-    public function systemError($errors)
+    public function systemError ($errors)
     {
         Yii::$app->response->code = Yii::$app->response->codeSystemSpaceError;
         Yii::$app->response->msg = $errors;
         return true;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     protected $rsaPublicKey = '-----BEGIN PUBLIC KEY-----

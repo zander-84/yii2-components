@@ -14,7 +14,7 @@ class BaseForm extends Model
 
     //异常存在于数据库down或者事务没有激活，不使用savepoint事务
     //______________________________________________________________________
-    public static function transaction (\Closure $callback, $attempts = 1)
+    public static function transaction (\Closure $callback, $isolationLevel = null, $attempts = 1)
     {
 
 
@@ -22,7 +22,7 @@ class BaseForm extends Model
 
             //____ 开启事务
             try {
-                $transaction = Yii::$app->db->beginTransaction();
+                $transaction = Yii::$app->db->beginTransaction($isolationLevel);
             } catch (\Throwable $e) {
                 Yii::$app->db->close();
 
