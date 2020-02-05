@@ -54,14 +54,14 @@ class BaseActiveController extends ActiveController
         $behaviors['maintain'] = [
             'class' => Maintain::class,
         ];
-        
-        $behaviors['rateLimiter'] = [
-            'class' => RateLimiter::class,
-            'rateLimit' => $this->rateLimit,
-            'timePeriod' => $this->timePeriod,
-            'separateRates' => false,
-            'enableRateLimitHeaders' => false,
-        ];
+
+        //$behaviors['rateLimiter'] = [
+        //    'class' => RateLimiter::class,
+        //    'rateLimit' => $this->rateLimit,
+        //    'timePeriod' => $this->timePeriod,
+        //    'separateRates' => false,
+        //    'enableRateLimitHeaders' => false,
+        //];
 
         $behaviors['contentNegotiator'] = [
             'class' => ContentNegotiator::class,
